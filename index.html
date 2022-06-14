@@ -8,11 +8,63 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <center>
-      <h1>Welcome to zig-wii's website!</h1>
-      <a href="https://github.com/zig-wii">
-        <img src="zig-wii.webp" alt="zig-wii">
-      </a>
-    </center>
+    <header>
+      <a href="/"><img src="header.webp" alt="zig-wii header"></a>
+    </header>
+    <navbar>
+      <a href="/">Home</a>
+      <a href="/tutorials.html">Tutorials</a>
+      <a href="/resources.html">Resources</a>
+      <a href="https://github.com/zig-wii">GitHub</a>
+    </navbar>
+    <main>
+      <h1>Welcome to zig-wii project!</h1>
+      <p>
+        <code>zig-wii</code> is a collection of toolchains and libraries for the
+        Nintendo Wii combined together using the Zig language. It is mainly an
+        effort to make it as simple as possible for anyone to start developing
+        games and applications targeting the Wii.
+      </p>
+      <p>
+        To get started with development, make sure you have Zig and Dolphin installed
+        on your computer. Next, run the following commands, which should build
+        the example project provided by <code>zig-wii</code> and run it in Dolphin:
+      </p>
+      <pre>
+        <code>
+          git clone https://github.com/zig-wii/example
+          cd example/
+          zig build run
+        </code>
+      </pre>
+      <p>
+        That's right, the only dependencies you need are Zig and Git for building
+        the .dol file, and optionally Dolphin for running. <code>zig-wii</code>
+        takes care of installing devkitpro for your operating system (currently
+        supports Linux, MacOS and Windows) so you don't have to deal with that
+        manually. You can also deploy the .dol file to your Wii over the network
+        if you have the homebrew channel. To do so, find the ip address of your
+        Wii, then change following line in <code>build.zig</code>:
+      </p>
+      <pre>
+        <code>
+          var obj = try ogc.target_wii(builder, .{ .name = "example" });
+        </code>
+      </pre>
+      <p>
+        into this:
+      </p>
+      <pre>
+        <code>
+          var obj = try ogc.target_wii(builder, .{ .name = "example", .wii_ip = "192.168.11.171" });          
+        </code>
+      </pre>
+      <p>
+        Now you can run <code>zig build deploy</code> to automatically build and
+        deploy the .dol file over to your Wii. If you encounter a stack dump while
+        developing, use <code>zig build line -- &lt;addresses&gt;</code> to find out
+        where in the code the stack dump occured.
+      </p>
+    </main>
   </body>
 </html>
